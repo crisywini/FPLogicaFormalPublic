@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="399.0" prefWidth="599.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MenuController">
+   <children>
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <GridPane prefHeight="155.0" prefWidth="599.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <HBox alignment="CENTER" prefHeight="71.0" prefWidth="599.0">
+                     <children>
+                        <TextField fx:id="addFormulasField" prefHeight="66.0" prefWidth="461.0" style="-fx-background-color: #A9E2F3; -fx-background-radius: 15px;">
+                           <font>
+                              <Font size="24.0" />
+                           </font></TextField>
+                        <HBox prefHeight="78.0" prefWidth="25.0" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="60.0" prefWidth="599.0" GridPane.rowIndex="1">
+                     <children>
+                        <TextArea fx:id="formulasArea" editable="false" prefHeight="92.0" prefWidth="416.0" style="-fx-background-color: #A9E2F3; -fx-border-color: #A9E2F3; -fx-background-radius: 15px;">
+                           <font>
+                              <Font size="24.0" />
+                           </font></TextArea>
+                        <HBox alignment="CENTER" prefHeight="77.0" prefWidth="60.0">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#handleAddButton" prefHeight="48.0" prefWidth="52.0" style="-fx-background-color: #2EFE9A; -fx-background-radius: 20px; -fx-effect: dropshadow( three-pass-box, green, 10.0, 0.0, 0.0, 0.0);" text="✚" textFill="#2b9712">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </HBox>
+                     </children>
+                  </HBox>
+               </children>
+            </GridPane>
+            <HBox alignment="CENTER" prefHeight="216.0" prefWidth="599.0">
+               <children>
+                  <GridPane prefHeight="175.0" prefWidth="200.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <HBox alignment="CENTER">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#handleDisjunctionButton" prefHeight="46.0" prefWidth="80.0" style="-fx-background-color: #A9E2F3; -fx-background-radius: 10px;" text="∨" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" GridPane.rowIndex="1">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#handleConditionalButton" prefHeight="46.0" prefWidth="80.0" style="-fx-background-color: #A9E2F3; -fx-background-radius: 10px;" text="➞" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" GridPane.columnIndex="1">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#handleConjuctionButton" prefHeight="46.0" prefWidth="80.0" style="-fx-background-color: #A9E2F3; -fx-background-radius: 10px;" text="∧" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#handleBiconditionalButton" prefHeight="46.0" prefWidth="80.0" style="-fx-background-color: #A9E2F3; -fx-background-radius: 10px;" text="↔" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#handleNotButton" prefHeight="46.0" prefWidth="80.0" style="-fx-background-color: #A9E2F3; -fx-background-radius: 10px;" text="ㄱ" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </GridPane>
+                  <GridPane>
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <HBox alignment="CENTER">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#handlePButton" prefHeight="46.0" prefWidth="80.0" style="-fx-background-color: #A9E2F3; -fx-background-radius: 10px;" text="p" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" GridPane.columnIndex="1">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#handleQButton" prefHeight="46.0" prefWidth="80.0" style="-fx-background-color: #A9E2F3; -fx-background-radius: 10px;" text="q" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" GridPane.rowIndex="1">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#handleRButton" prefHeight="46.0" prefWidth="80.0" style="-fx-background-color: #A9E2F3; -fx-background-radius: 10px;" text="r" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#handleSButton" prefHeight="46.0" prefWidth="80.0" style="-fx-background-color: #A9E2F3; -fx-background-radius: 10px;" text="s" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" GridPane.rowIndex="2">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#handleTButton" prefHeight="46.0" prefWidth="80.0" style="-fx-background-color: #A9E2F3; -fx-background-radius: 10px;" text="t" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#handleUButton" prefHeight="46.0" prefWidth="80.0" style="-fx-background-color: #A9E2F3; -fx-background-radius: 10px;" text="u" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </GridPane>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
