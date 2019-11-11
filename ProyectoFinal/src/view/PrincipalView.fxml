@@ -5,7 +5,7 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane fx:id="principalPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #81BEF7; -fx-border-color: #CECEF6;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.PrincipalController">
+<BorderPane fx:id="principalPane" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #81BEF7; -fx-border-color: #CECEF6;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.PrincipalController">
    <top>
       <MenuBar style="-fx-background-color: #819FF7;" BorderPane.alignment="CENTER">
         <menus>

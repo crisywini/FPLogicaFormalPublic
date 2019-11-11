@@ -47,7 +47,7 @@ public class Proceso
 	public boolean isAtom(String formula)
 	{
 		boolean isAtom = true;
-		if(formula.contains("V")||formula.contains("^")||formula.contains("→")||formula.contains("↔")||formula.contains("¬"))
+		if(formula.contains("V")||formula.contains("^")||formula.contains("")|formula.contains("↔")||formula.contains("¬"))
 			isAtom = false;;
 		return isAtom;
 	}
@@ -122,4 +122,5 @@ public class Proceso
 		}
 		return areLettersInARow;
 	}
+	
 }

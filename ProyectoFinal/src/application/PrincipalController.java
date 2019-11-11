@@ -6,13 +6,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 public class PrincipalController {
 
 	private Main main;
 	@FXML
-    private BorderPane principalPane;
+	private BorderPane principalPane;
 	private Stage primaryStage;
 	AnchorPane menuPane;
 	MenuController menuController;
@@ -27,22 +26,18 @@ public class PrincipalController {
 
 	@FXML
 	void initialize() {
-		loadMenu();
 	}
-	public void loadMenu()
-	{
-		if(menuPane==null)
-		{
-			try 
-			{
+
+	public void loadMenu() {
+		if (menuPane == null) {
+			try {
 				FXMLLoader loader = new FXMLLoader();
 				loader.setLocation(Main.class.getResource("../view/MenuView.fxml"));
-				menuPane = (AnchorPane)loader.load();
+				menuPane = (AnchorPane) loader.load();
 				menuController = loader.getController();
-				menuController.setBigView(this);
-			} 
-			catch (Exception e) 
-			{
+				menuController.setPrincipal(this);
+				menuController.updateLanguage();
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
@@ -56,8 +51,8 @@ public class PrincipalController {
 	public void setMain(Main main) {
 		this.main = main;
 	}
-	public void showAlert(String message, String title,AlertType type)
-	{
+
+	public void showAlert(String message, String title, AlertType type) {
 		Alert alert = new Alert(type);
 		alert.initOwner(primaryStage);
 		alert.setContentText(message);
