@@ -68,10 +68,11 @@ public class Main extends Application implements IProcessControl {
 	public String chooseLanguage() {
 		String idioma;
 		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("Dialogo para elegir el idioma");
-		alert.setContentText("Elija su opción");
-		ButtonType buttonTypeOne = new ButtonType("Español");
-		ButtonType buttonTypeTwo = new ButtonType("Inglés");
+		alert.setTitle("Elige el idioma(Choose the language)");
+		alert.setContentText("Elige el idioma para la applicación\nChoose the language of the app");
+		alert.setHeaderText("");
+		ButtonType buttonTypeOne = new ButtonType("Español\nSpanish");
+		ButtonType buttonTypeTwo = new ButtonType("Inglés\nEnglish");
 		alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo);
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == buttonTypeOne) {
