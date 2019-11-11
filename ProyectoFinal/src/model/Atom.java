@@ -18,4 +18,9 @@ public class Atom {
 	public void setAtom(char atom) {
 		this.atom = atom;
 	}
+
+	@Override
+	public String toString() {
+		return atom + "";
+	}
 }

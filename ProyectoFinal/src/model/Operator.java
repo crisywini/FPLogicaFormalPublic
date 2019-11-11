@@ -15,4 +15,8 @@ public class Operator {
 		this.symbol = symbol;
 	}
 
+	@Override
+	public String toString() {
+		return symbol + "";
+	}
 }
