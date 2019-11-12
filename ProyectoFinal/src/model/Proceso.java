@@ -122,5 +122,8 @@ public class Proceso
 		}
 		return areLettersInARow;
 	}
+	/*
+	 * Cristian papi no se crea gringo
+	 */
 	
 }
