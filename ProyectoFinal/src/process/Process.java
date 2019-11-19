@@ -47,7 +47,6 @@ public class Process {
 		return countLeftParenthesis(formula) == countRightParenthesis(formula);
 	}
 
-	
 	/**
 	 * Metodo que permite eliminar el simbolo de equivalencia de una formula
 	 * proposicional
@@ -401,6 +400,47 @@ public class Process {
 
 	public static char getMainOperatorChar(String formula) {
 		return formula.charAt(getMainOperatorIndex(formula));
+	}
+
+	/**
+	 * Metodo que permite concatenar un arraylist las clausulas de un arraylist a un
+	 * arraylist de arraylist de clausulas
+	 * 
+	 * @param formulas arraylist
+	 * @return un arraylist de arraylist de String
+	 */
+	public static ArrayList<ArrayList<String>> concatClausules(ArrayList<String> formulas) {
+		ArrayList<ArrayList<String>> out = new ArrayList<ArrayList<String>>();
+		FormulaBienFormada fbf;
+		String formula = "";
+		for (int i = 0; i < formulas.size(); i++) {
+			formula = formulas.get(i);
+			fbf = new FormulaBienFormada(formula);
+			ArrayList<ArrayList<String>> auxiliar = fbf.getClausules(formula);
+			for (int j = 0; j < auxiliar.size(); j++) {
+				out.add(auxiliar.get(j));
+			}
+		}
+		return out;
+	}
+
+	/**
+	 * Metodo que permite verificar si una formula es bien formada o no
+	 * 
+	 * @param formula a verificar
+	 * @return true si es bien formada y false de no serlo.
+	 */
+	public static boolean isParenthesisExces(String formula) {
+		int counter = 0;
+		for (int i = 0; i < formula.length(); i++) {
+			if (formula.charAt(i) == '(') {
+				counter++;
+			}
+			if (formula.charAt(i) == ')') {
+				counter--;
+			}
+		}
+		return counter == 0;
 	}
 
 }

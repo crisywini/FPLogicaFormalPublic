@@ -75,11 +75,11 @@ public class PrincipalController {
 	public String chooseType() {
 		String idioma;
 		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("Elige el idioma(Choose the language)");
-		alert.setContentText("Elige el idioma para la applicación\nChoose the language of the app");
+		alert.setTitle("¿Conclusión?¿Premisa?(Conclusion?Premise?)");
+		alert.setContentText("Elige como actúa la forma en el argumento\nChoose the way the formula acts");
 		alert.setHeaderText("");
-		ButtonType buttonTypeOne = new ButtonType("Premisa");
-		ButtonType buttonTypeTwo = new ButtonType("Conclusión");
+		ButtonType buttonTypeOne = new ButtonType("Premisa\nPremise");
+		ButtonType buttonTypeTwo = new ButtonType("Conclusión\nConclusion");
 		alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo);
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == buttonTypeOne)

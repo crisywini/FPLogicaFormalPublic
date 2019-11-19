@@ -32,11 +32,7 @@ public class Main {
 //		formulas.add(f4);
 //		System.out.println(Process.isInsatisfacible(formulas,new ArrayList<ArrayList<String>>()));
 //	}
-		String fbf2 = "((p)↔(q))→(r)";
-		FormulaBienFormada fbf = new FormulaBienFormada(fbf2);
-		System.out.println(fbf.getClausules(fbf2));
-		System.out.println(fbf.toFC());
-
+		String fbf2 = "((p)↔(q))<)→((r))";
 	}
 
 }

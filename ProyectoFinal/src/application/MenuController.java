@@ -9,6 +9,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import process.FormulaBienFormada;
+import process.Process;
 
 public class MenuController {
 	private PrincipalController principal;
@@ -25,24 +26,45 @@ public class MenuController {
 	@FXML
 	private Button verifyButton;
 	private ArrayList<String> formula = new ArrayList<String>();
+	private ArrayList<ArrayList<String>> clausulas;
+	private ArrayList<String> formulas = new ArrayList<String>();
+	private String conclusion;
 	private FormulaBienFormada fbf;
 
 	@FXML
 	void handleAddButton() {
-		if(isInputValid())
-		{
-			
+		if (isInputValid()) {
+			String formula = addFormulasArea.getText();
+			String choose = principal.chooseType();
+			if (choose.equals("premisa")) {
+				formulasArea.setText(formula);
+				formulas.add(formula);
+			} else {
+				formulasArea.setText("-----------------------\n" + formula);
+				setConclusion("¬(" + formula + ")");
+				addFormulasArea.setEditable(false);
+				formulas.add(getConclusion());
+			}
 		}
-
 	}
 
 	@FXML
 	void handleVerifyButton() {
-		if (isInputValid()) {
+		if (formulas.size() > 0) {
 			String formula = addFormulasArea.getText();
-			fbf = new FormulaBienFormada(formula);
-			principal.showAlert(fbf.getClausules(formula).toString() + "", "", AlertType.INFORMATION);
-
+			if (Process.isParenthesisExces(formula)) {
+				fbf = new FormulaBienFormada(formula);
+				clausulas = Process.concatClausules(formulas);
+				if (Process.isInsatisfacible(clausulas, new ArrayList<ArrayList<String>>())) {
+					principal.showAlert(
+							"El argumento es valido porque:\n\nClausulas resultantes al realizar resolucion:\n\n "
+									+ clausulas,
+							"Resultado", AlertType.INFORMATION);
+				}
+				addFormulasArea.setText("");
+				addFormulasArea.setEditable(true);
+				formulasArea.setText("");
+			}
 		}
 	}
 
@@ -157,11 +179,21 @@ public class MenuController {
 		boolean isValid = false;
 		String errorMessage = "";
 		if (addFormulasArea.getText() == null || addFormulasArea.getText().length() == 0)
-			errorMessage += "Debes ingresar la formula!";
+			errorMessage += "Debes ingresar la formula!\n(Must input the formula!)\n";
+		else if (!Process.isParenthesisExces(addFormulasArea.getText()))
+			errorMessage += "La formula no tiene exceso de parentesis!\n(The formula does not have parenthesis excess)";
 		if (errorMessage.length() == 0)
 			isValid = true;
 		else
 			principal.showAlert(errorMessage, "ERROR", AlertType.ERROR);
 		return isValid;
+	}
+
+	public String getConclusion() {
+		return conclusion;
+	}
+
+	public void setConclusion(String conclusion) {
+		this.conclusion = conclusion;
 	}
 }
