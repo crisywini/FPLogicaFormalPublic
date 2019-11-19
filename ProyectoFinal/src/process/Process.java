@@ -1,32 +1,8 @@
 package process;
 
-import exceptions.ParenthesisIncorrectException;
-import model.Molecule;
+import java.util.ArrayList;
 
 public class Process {
-	/**
-	 * Metodo que permite convertir una formula String en una Molecule
-	 * 
-	 * @param formula en String
-	 * @return la formula pero en formato Molecula
-	 * @throws ParenthesisIncorrectException si la formula no tiene la misma
-	 *                                       cantidad de parentesis de apertura que
-	 *                                       de cerrar
-	 */
-	public static Molecule parseString(String formula) throws ParenthesisIncorrectException {
-		Molecule mol = new Molecule();
-		for (int i = 0; i < formula.length(); i++) {
-			if (formula.charAt(i) == 'v' || formula.charAt(i) == '^' || formula.charAt(i) == 'C'
-					|| formula.charAt(i) == 'E')
-				mol.addOperator(formula.charAt(i));
-			else if (formula.charAt(i) >= 97 && formula.charAt(i) <= 122)
-				mol.addAtom(formula.charAt(i));
-		}
-		if (!isParenthesisOK(formula))
-			throw new ParenthesisIncorrectException("The formula has: " + countLeftParenthesis(formula)
-					+ " left parenthesis and: " + countRightParenthesis(formula) + " right parenthesis");
-		return mol;
-	}
 
 	/**
 	 * Metodo que permite contar la cantidad de parentesis izquierdos que posee una
@@ -165,7 +141,7 @@ public class Process {
 			}
 		}
 		changer = 0;
-		auxiliar = formula.indexOf("C") + 3;
+		auxiliar = formula.indexOf("C") + 2;
 		counter = 1;
 		stopper = false;
 		for (int i = auxiliar; i < formula.length() && !stopper; i++) {
@@ -180,15 +156,21 @@ public class Process {
 			}
 			theta += formula.charAt(i);
 		}
+		theta = theta.substring(0, theta.length() - 1);
 		String newFormula = "";
 		auxiliar = getMainOperatorIndex(formula);
 		if (getMainOperator(formula).equals("C")) {
 			newFormula = "(~" + alpha + ")V(" + theta + ")";
-		} else {
+		} else if (getMainOperatorIndex(formula) > formula.indexOf("C")) {
 			newFormula += "((~" + alpha + ")V(" + theta + "))";
 			for (int i = auxiliar; i < formula.length(); i++) {
 				newFormula += formula.charAt(i);
 			}
+		} else {
+			for (int i = 0; i < getMainOperatorIndex(formula) + 1; i++) {
+				newFormula += formula.charAt(i);
+			}
+			newFormula += "(~" + alpha + ")V(" + theta + ")";
 		}
 		return newFormula;
 	}
@@ -243,6 +225,7 @@ public class Process {
 				newFormula += formula.charAt(i);
 			}
 		}
+
 		return newFormula;
 	}
 
@@ -264,6 +247,121 @@ public class Process {
 			}
 		}
 		return index + 1;
+	}
+
+	public static boolean isInsatisfacible(ArrayList<ArrayList<String>> clausulas,
+			ArrayList<ArrayList<String>> utilizados) {
+
+		System.out.println("clausulas " + clausulas.toString());
+		for (int i = 0; i < clausulas.size(); i++) {
+			for (int j = 1 + i; j < clausulas.size(); j++) {
+				System.out.println("clausulas  en el segundo for" + clausulas.toString());
+				Object[] res = hacerResolucion(clausulas.get(i), clausulas.get(j));
+				System.out.println("res " + res[0]);
+				if (res[0].equals(true) && !utilizados.contains(clausulas.get(i))
+						&& !utilizados.contains(clausulas.get(j))) {
+
+					System.err.println("hizo resolucion entre " + clausulas.get(i) + " y " + clausulas.get(j));
+					utilizados.add(clausulas.get(i));
+					utilizados.add(clausulas.get(j));
+					clausulas.add((ArrayList<String>) res[1]);
+
+					boolean nose = isInsatisfacible(clausulas, utilizados);
+					if (nose == true) {
+						return nose;
+					}
+					utilizados.remove(clausulas.get(j));
+					utilizados.remove(clausulas.get(i));
+					clausulas.remove((ArrayList<String>) res[1]);
+					System.out.println("clausulas despues del if " + clausulas.toString());
+				}
+			}
+		}
+		System.out.println("clausulas al final " + clausulas.toString());
+		if (isVacio(clausulas)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public static boolean isVacio(ArrayList<ArrayList<String>> f) {
+		for (int i = 0; i < f.size(); i++) {
+			for (int j = 0; j < f.get(i).size(); j++) {
+				if (f.get(i).get(j).equals(" ")) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	public static Object[] hacerResolucion(ArrayList<String> formulaX, ArrayList<String> formulaY) {
+		ArrayList<String> formula1 = (ArrayList<String>) formulaX.clone();
+		ArrayList<String> formula2 = (ArrayList<String>) formulaY.clone();
+		Object arreglo[] = { false, "", "" };
+		System.out.println("formula 1 " + formula1.toString());
+		System.out.println("formula 2 " + formula2.toString());
+		for (int i = 0; i < formula1.size(); i++) {
+			String clausula1 = formula1.get(i);
+			for (int j = 0; j < formula2.size(); j++) {
+				String clausula2 = formula2.get(j);
+				Object[] data = esParComplementario(clausula1, clausula2);
+				// System.out.println("es par complementario "+data[0]);
+				if (data[0] != null) {
+					if (data[0].equals(true)) {
+						formula1.remove(i);
+						formula2.remove(j);
+						ArrayList<String> con = concat(formula1, formula2);
+						if (con.isEmpty()) {
+							con.add(" ");
+						}
+						arreglo[0] = true;
+						arreglo[1] = con;
+						arreglo[2] = data[1];
+
+						return arreglo;
+					}
+				}
+			}
+		}
+		return arreglo;
+	}
+
+	public static ArrayList<String> concat(ArrayList<String> arraylist1, ArrayList<String> arraylist2) {
+		ArrayList<String> newArrayList = new ArrayList<String>();
+		for (int i = 0; i < arraylist1.size(); i++) {
+			newArrayList.add(arraylist1.get(i));
+		}
+		for (int i = 0; i < arraylist2.size(); i++) {
+			if (!newArrayList.contains(arraylist2.get(i))) {
+				newArrayList.add(arraylist2.get(i));
+			}
+		}
+		return newArrayList;
+	}
+
+	public static Object[] esParComplementario(String clausula1, String clausula2) {
+		System.out.println("");
+		Object[] data = new Object[2];
+		if (clausula1.length() == 2) {
+			String clausulaAux = clausula1.substring(1, 2);
+			if (clausulaAux.equals(clausula2)) {
+				data[0] = true;
+				data[1] = clausula2;
+				return data;
+			}
+		} else {
+			if (clausula2.length() == 2) {
+				String clausulaAux = clausula2.substring(1, 2);
+				if (clausulaAux.equals(clausula1)) {
+					data[0] = true;
+					data[1] = clausulaAux;
+					return data;
+				}
+			}
+		}
+		return data;
 	}
 
 	public static String getMainOperator(String formula) {

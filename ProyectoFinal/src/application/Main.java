@@ -1,13 +1,13 @@
 package application;
 
 import java.util.Locale;
+
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
-import model.Proceso;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -20,13 +20,11 @@ import javafx.scene.layout.BorderPane;
  * @author Crisi
  *
  */
-public class Main extends Application implements IProcessControl {
-	private Proceso myProcess;
+public class Main extends Application {
 	private ResourceBundle messages;
 
 	@Override
 	public void start(Stage primaryStage) {
-		myProcess = new Proceso();
 		String idiom = chooseLanguage();
 		setLanguage(idiom);
 		loadPrincipal(primaryStage);
@@ -57,14 +55,6 @@ public class Main extends Application implements IProcessControl {
 		}
 	}
 
-	public Proceso getMyProcess() {
-		return myProcess;
-	}
-
-	public void setMyProcess(Proceso myProcess) {
-		this.myProcess = myProcess;
-	}
-
 	public String chooseLanguage() {
 		String idioma;
 		Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -75,9 +65,9 @@ public class Main extends Application implements IProcessControl {
 		ButtonType buttonTypeTwo = new ButtonType("Inglés\nEnglish");
 		alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo);
 		Optional<ButtonType> result = alert.showAndWait();
-		if (result.get() == buttonTypeOne) {
+		if (result.get() == buttonTypeOne)
 			idioma = "Español";
-		} else
+		else
 			idioma = "Inglés";
 		return idioma;
 
@@ -99,45 +89,5 @@ public class Main extends Application implements IProcessControl {
 
 	public String getTextMessage(String text) {
 		return messages.getString(text);
-	}
-
-	@Override
-	public int countLeftParenthesis(String formula) {
-		return getMyProcess().countLeftParenthesis(formula);
-	}
-
-	@Override
-	public int countRightParenthesis(String formula) {
-		return getMyProcess().countRightParenthesis(formula);
-	}
-
-	@Override
-	public boolean isParenthesisOK(String formula) {
-		return getMyProcess().isParenthesisOK(formula);
-	}
-
-	@Override
-	public boolean isAtom(String formula) {
-		return getMyProcess().isAtom(formula);
-	}
-
-	@Override
-	public boolean isAtomOk(String formula) {
-		return getMyProcess().isAtomOk(formula);
-	}
-
-	@Override
-	public boolean isMolOk(String formula) {
-		return getMyProcess().isMolOk(formula);
-	}
-
-	@Override
-	public boolean areSpaces(String formula) {
-		return getMyProcess().areSpaces(formula);
-	}
-
-	@Override
-	public boolean areLettersInARow(String formula) {
-		return getMyProcess().areLettersInARow(formula);
 	}
 }
