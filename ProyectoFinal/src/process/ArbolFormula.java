@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /**
  * 
- * @author Yesid Chair Rosas
+ * @author Yesid Shair Rosas
  *
  */
 public class ArbolFormula {

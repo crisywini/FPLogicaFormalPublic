@@ -21,7 +21,7 @@
                      <children>
                         <TextArea fx:id="addFormulasArea" prefHeight="145.0" prefWidth="274.0">
                            <font>
-                              <Font size="36.0" />
+                              <Font size="18.0" />
                            </font>
                         </TextArea>
                      </children>
@@ -55,7 +55,7 @@
                                  <children>
                                     <HBox alignment="CENTER">
                                        <children>
-                                          <Button mnemonicParsing="false" onAction="#handleDisjunctionButton" prefHeight="46.0" prefWidth="80.0" style="-fx-background-radius: 20px;" text="∨">
+                                          <Button fx:id="disjunctionButton" mnemonicParsing="false" onAction="#handleDisjunctionButton" prefHeight="46.0" prefWidth="80.0" style="-fx-background-radius: 20px;" text="∨">
                                              <font>
                                                 <Font size="18.0" />
                                              </font>
@@ -64,7 +64,7 @@
                                     </HBox>
                                     <HBox alignment="CENTER" GridPane.rowIndex="1">
                                        <children>
-                                          <Button mnemonicParsing="false" onAction="#handleConditionalButton" prefHeight="46.0" prefWidth="80.0" style="-fx-background-radius: 20px;" text="➞">
+                                          <Button fx:id="conditionalButton" mnemonicParsing="false" onAction="#handleConditionalButton" prefHeight="46.0" prefWidth="80.0" style="-fx-background-radius: 20px;" text="➞">
                                              <font>
                                                 <Font size="18.0" />
                                              </font>
@@ -73,7 +73,7 @@
                                     </HBox>
                                     <HBox alignment="CENTER" GridPane.columnIndex="1">
                                        <children>
-                                          <Button mnemonicParsing="false" onAction="#handleConjuctionButton" prefHeight="46.0" prefWidth="80.0" style="-fx-background-radius: 20px;" text="∧">
+                                          <Button fx:id="conjuctionButton" mnemonicParsing="false" onAction="#handleConjuctionButton" prefHeight="46.0" prefWidth="80.0" style="-fx-background-radius: 20px;" text="∧">
                                              <font>
                                                 <Font size="18.0" />
                                              </font>
@@ -82,7 +82,7 @@
                                     </HBox>
                                     <HBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                        <children>
-                                          <Button mnemonicParsing="false" onAction="#handleBiconditionalButton" prefHeight="46.0" prefWidth="80.0" style="-fx-background-radius: 20px;" text="↔">
+                                          <Button fx:id="biconditionalButton" mnemonicParsing="false" onAction="#handleBiconditionalButton" prefHeight="46.0" prefWidth="80.0" style="-fx-background-radius: 20px;" text="↔">
                                              <font>
                                                 <Font size="24.0" />
                                              </font>
@@ -91,7 +91,7 @@
                                     </HBox>
                                     <HBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                        <children>
-                                          <Button mnemonicParsing="false" onAction="#handleNotButton" prefHeight="46.0" prefWidth="80.0" style="-fx-background-radius: 20px;" text="ㄱ">
+                                          <Button fx:id="notButton" mnemonicParsing="false" onAction="#handleNotButton" prefHeight="46.0" prefWidth="80.0" style="-fx-background-radius: 20px;" text="ㄱ">
                                              <font>
                                                 <Font size="18.0" />
                                              </font>

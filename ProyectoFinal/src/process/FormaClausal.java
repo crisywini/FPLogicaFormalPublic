@@ -5,7 +5,7 @@ import java.util.Collections;
 
 /**
  * 
- * @author Yesid Chair Rosas
+ * @author Yesid Shair Rosas
  *
  */
 public class FormaClausal {

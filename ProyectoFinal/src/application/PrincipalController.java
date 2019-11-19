@@ -9,10 +9,11 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import main.MainApp;
 
 public class PrincipalController {
 
-	private Main main;
+	private MainApp main;
 	@FXML
 	private BorderPane principalPane;
 	private Stage primaryStage;
@@ -35,23 +36,25 @@ public class PrincipalController {
 		if (menuPane == null) {
 			try {
 				FXMLLoader loader = new FXMLLoader();
-				loader.setLocation(Main.class.getResource("../view/MenuView.fxml"));
+				loader.setLocation(MainApp.class.getResource("../view/MenuView.fxml"));
 				menuPane = (AnchorPane) loader.load();
 				menuController = loader.getController();
-				menuController.setPrincipal(this);
-				menuController.updateLanguage();
+
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
+		menuController.setPrincipal(this);
+		menuController.updateLanguage();
+
 		principalPane.setCenter(menuPane);
 	}
 
-	public Main getMain() {
+	public MainApp getMain() {
 		return main;
 	}
 
-	public void setMain(Main main) {
+	public void setMain(MainApp main) {
 		this.main = main;
 	}
 
@@ -87,5 +90,17 @@ public class PrincipalController {
 		else
 			idioma = "conclusion";
 		return idioma;
+	}
+
+	@FXML
+	void handleEnglishMenu() {
+		main.setLanguage("Ingles");
+		loadMenu();
+	}
+
+	@FXML
+	void handleSpanishMenu() {
+		main.setLanguage("Español");
+		loadMenu();
 	}
 }

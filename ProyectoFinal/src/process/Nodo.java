@@ -2,7 +2,7 @@ package process;
 
 /**
  * 
- * @author Yesid Chair Rosas
+ * @author Yesid Shair Rosas
  *
  */
 public class Nodo {

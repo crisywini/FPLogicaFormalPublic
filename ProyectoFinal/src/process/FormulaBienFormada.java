@@ -7,7 +7,7 @@ import java.util.HashSet;
 
 /**
  * 
- * @author Yesid Chair Rosas
+ * @author Yesid Shair Rosas
  */
 public class FormulaBienFormada {
 	public String fbf;

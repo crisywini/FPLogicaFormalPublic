@@ -2,11 +2,11 @@ package application;
 
 import java.util.ArrayList;
 
+import exceptions.NotFbfException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import process.FormulaBienFormada;
 import process.Process;
@@ -25,6 +25,20 @@ public class MenuController {
 
 	@FXML
 	private Button verifyButton;
+	@FXML
+	private Button disjunctionButton;
+
+	@FXML
+	private Button conditionalButton;
+
+	@FXML
+	private Button conjuctionButton;
+
+	@FXML
+	private Button biconditionalButton;
+
+	@FXML
+	private Button notButton;
 	private ArrayList<String> formula = new ArrayList<String>();
 	private ArrayList<ArrayList<String>> clausulas;
 	private ArrayList<String> formulas = new ArrayList<String>();
@@ -37,14 +51,22 @@ public class MenuController {
 			String formula = addFormulasArea.getText();
 			String choose = principal.chooseType();
 			if (choose.equals("premisa")) {
-				formulasArea.setText(formula);
+				String auxiliar = formulasArea.getText();
+				formulasArea.setText(auxiliar + "\n" + formula);
 				formulas.add(formula);
 			} else {
-				formulasArea.setText("-----------------------\n" + formula);
-				setConclusion("¬(" + formula + ")");
+				String auxiliar = formulasArea.getText() + "\n---------\n" + formula + "\n";
+				formulasArea.setText(auxiliar);
+				setConclusion(formula);
 				addFormulasArea.setEditable(false);
+				biconditionalButton.setDisable(true);
+				conditionalButton.setDisable(true);
+				conjuctionButton.setDisable(true);
+				disjunctionButton.setDisable(true);
+				notButton.setDisable(true);
 				formulas.add(getConclusion());
 			}
+			addFormulasArea.setText("");
 		}
 	}
 
@@ -52,19 +74,35 @@ public class MenuController {
 	void handleVerifyButton() {
 		if (formulas.size() > 0) {
 			String formula = addFormulasArea.getText();
-			if (Process.isParenthesisExces(formula)) {
-				fbf = new FormulaBienFormada(formula);
-				clausulas = Process.concatClausules(formulas);
-				if (Process.isInsatisfacible(clausulas, new ArrayList<ArrayList<String>>())) {
-					principal.showAlert(
-							"El argumento es valido porque:\n\nClausulas resultantes al realizar resolucion:\n\n "
-									+ clausulas,
-							"Resultado", AlertType.INFORMATION);
-				}
-				addFormulasArea.setText("");
-				addFormulasArea.setEditable(true);
-				formulasArea.setText("");
+			setFbf(new FormulaBienFormada(formula));
+			clausulas = Process.concatClausules(formulas);
+			if (Process.isInsatisfacible(clausulas, new ArrayList<ArrayList<String>>())) {
+				principal.showAlert(
+						"El conjunto de premisas es insatisfacible:\n(The premises set is satisfacible)\nClausulas resultantes al realizar resolucion:\n(Resulting clauses making resolution)\n "
+								+ clausulas,
+						"Resultado", AlertType.INFORMATION);
+			} else {
+				principal.showAlert(
+						"EL conjunto de premisas es satisfacible:\n(The premises set is satisfacible)\nClausulas resultantes al realizar resolucion:\n(Resulting clauses making resolution)\n "
+								+ clausulas,
+						"Resultado", AlertType.INFORMATION);
 			}
+
+			addFormulasArea.setText("");
+			addFormulasArea.setEditable(true);
+			formulasArea.setText("");
+			clausulas.clear();
+			formulas.clear();
+			this.formula.clear();
+			biconditionalButton.setDisable(false);
+			conditionalButton.setDisable(false);
+			conjuctionButton.setDisable(false);
+			disjunctionButton.setDisable(false);
+			notButton.setDisable(false);
+
+		} else {
+			principal.showAlert("Debes ingresar alguna formula\n(You must input some formula)", "ADVERTENCIA(WARNING)",
+					AlertType.WARNING);
 		}
 	}
 
@@ -180,8 +218,14 @@ public class MenuController {
 		String errorMessage = "";
 		if (addFormulasArea.getText() == null || addFormulasArea.getText().length() == 0)
 			errorMessage += "Debes ingresar la formula!\n(Must input the formula!)\n";
-		else if (!Process.isParenthesisExces(addFormulasArea.getText()))
-			errorMessage += "La formula no tiene exceso de parentesis!\n(The formula does not have parenthesis excess)";
+		else
+			try {
+				if (!Process.isFbf(addFormulasArea.getText()))
+					errorMessage += "La formula no esta bien formada\nThe formula is not GFF";
+			} catch (NotFbfException e) {
+				errorMessage += e.getMessage() + "\n";
+
+			}
 		if (errorMessage.length() == 0)
 			isValid = true;
 		else
@@ -195,5 +239,13 @@ public class MenuController {
 
 	public void setConclusion(String conclusion) {
 		this.conclusion = conclusion;
+	}
+
+	public FormulaBienFormada getFbf() {
+		return fbf;
+	}
+
+	public void setFbf(FormulaBienFormada fbf) {
+		this.fbf = fbf;
 	}
 }

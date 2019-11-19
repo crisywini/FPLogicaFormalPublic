@@ -2,6 +2,9 @@ package process;
 
 import java.util.ArrayList;
 
+
+import exceptions.NotFbfException;
+
 public class Process {
 
 	/**
@@ -248,19 +251,20 @@ public class Process {
 	 * @param utilizados clausulas utilizadas en la formula
 	 * @return true si es insatisfacible y false si es satisfacible.
 	 */
+	@SuppressWarnings("unchecked")
 	public static boolean isInsatisfacible(ArrayList<ArrayList<String>> clausulas,
 			ArrayList<ArrayList<String>> utilizados) {
 
-		System.out.println("clausulas " + clausulas.toString());
+		//System.out.println("clausulas " + clausulas.toString());
 		for (int i = 0; i < clausulas.size(); i++) {
 			for (int j = 1 + i; j < clausulas.size(); j++) {
-				System.out.println("clausulas  en el segundo for" + clausulas.toString());
+				//System.out.println("clausulas  en el segundo for" + clausulas.toString());
 				Object[] res = hacerResolucion(clausulas.get(i), clausulas.get(j));
-				System.out.println("res " + res[0]);
+				//System.out.println("res " + res[0]);
 				if (res[0].equals(true) && !utilizados.contains(clausulas.get(i))
 						&& !utilizados.contains(clausulas.get(j))) {
 
-					System.err.println("hizo resolucion entre " + clausulas.get(i) + " y " + clausulas.get(j));
+					//System.err.println("hizo resolucion entre " + clausulas.get(i) + " y " + clausulas.get(j));
 					utilizados.add(clausulas.get(i));
 					utilizados.add(clausulas.get(j));
 					clausulas.add((ArrayList<String>) res[1]);
@@ -272,11 +276,11 @@ public class Process {
 					utilizados.remove(clausulas.get(j));
 					utilizados.remove(clausulas.get(i));
 					clausulas.remove((ArrayList<String>) res[1]);
-					System.out.println("clausulas despues del if " + clausulas.toString());
+					//System.out.println("clausulas despues del if " + clausulas.toString());
 				}
 			}
 		}
-		System.out.println("clausulas al final " + clausulas.toString());
+		//System.out.println("clausulas al final " + clausulas.toString());
 		if (isVacio(clausulas)) {
 			return true;
 		} else {
@@ -312,11 +316,13 @@ public class Process {
 	 *         formulas en sus dos siguientes campos disponibles
 	 */
 	public static Object[] hacerResolucion(ArrayList<String> formulaX, ArrayList<String> formulaY) {
+		@SuppressWarnings("unchecked")
 		ArrayList<String> formula1 = (ArrayList<String>) formulaX.clone();
+		@SuppressWarnings("unchecked")
 		ArrayList<String> formula2 = (ArrayList<String>) formulaY.clone();
 		Object arreglo[] = { false, "", "" };
-		System.out.println("formula 1 " + formula1.toString());
-		System.out.println("formula 2 " + formula2.toString());
+		//System.out.println("formula 1 " + formula1.toString());
+		//System.out.println("formula 2 " + formula2.toString());
 		for (int i = 0; i < formula1.size(); i++) {
 			String clausula1 = formula1.get(i);
 			for (int j = 0; j < formula2.size(); j++) {
@@ -371,7 +377,7 @@ public class Process {
 	 * @return un array de Object con la verificacion en 0 y en 1 la formula atomica
 	 */
 	public static Object[] esParComplementario(String clausula1, String clausula2) {
-		System.out.println("");
+		//System.out.println("");
 		Object[] data = new Object[2];
 		if (clausula1.length() == 2) {
 			String clausulaAux = clausula1.substring(1, 2);
@@ -429,8 +435,9 @@ public class Process {
 	 * 
 	 * @param formula a verificar
 	 * @return true si es bien formada y false de no serlo.
+	 * @throws NotFbfException
 	 */
-	public static boolean isParenthesisExces(String formula) {
+	public static boolean isFbf(String formula) throws NotFbfException {
 		int counter = 0;
 		for (int i = 0; i < formula.length(); i++) {
 			if (formula.charAt(i) == '(') {
@@ -438,6 +445,16 @@ public class Process {
 			}
 			if (formula.charAt(i) == ')') {
 				counter--;
+				if (formula.charAt(i - 1) != ')') {
+					if (!Character.isAlphabetic(formula.charAt(i - 1))) {
+						throw new NotFbfException("La formula no está bien formada/nThe formula is not GFF");
+					}
+				}
+			}
+			if(Character.isAlphabetic(formula.charAt(i)))
+			{
+				if(Character.isAlphabetic(formula.charAt(i+1)))
+					throw new NotFbfException("La formula no está bien formada\nThe formula is not GFF");
 			}
 		}
 		return counter == 0;
