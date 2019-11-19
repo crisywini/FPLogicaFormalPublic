@@ -1,8 +1,11 @@
 package application;
 
+import java.util.Optional;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
@@ -67,5 +70,22 @@ public class PrincipalController {
 
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
+	}
+
+	public String chooseType() {
+		String idioma;
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Elige el idioma(Choose the language)");
+		alert.setContentText("Elige el idioma para la applicación\nChoose the language of the app");
+		alert.setHeaderText("");
+		ButtonType buttonTypeOne = new ButtonType("Premisa");
+		ButtonType buttonTypeTwo = new ButtonType("Conclusión");
+		alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo);
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == buttonTypeOne)
+			idioma = "premisa";
+		else
+			idioma = "conclusion";
+		return idioma;
 	}
 }

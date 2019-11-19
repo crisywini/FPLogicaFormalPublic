@@ -47,15 +47,7 @@ public class Process {
 		return countLeftParenthesis(formula) == countRightParenthesis(formula);
 	}
 
-	public String getNormalDisjunctiveForm(String formula) {
-		String disjunctiveForm = formula.substring(0, formula.length());
-		if (disjunctiveForm.contains("E")) {
-			// Metodo para elminar equivalencia
-		}
-
-		return "";
-	}
-
+	
 	/**
 	 * Metodo que permite eliminar el simbolo de equivalencia de una formula
 	 * proposicional
@@ -249,6 +241,14 @@ public class Process {
 		return index + 1;
 	}
 
+	/**
+	 * Metodo que permite verificar si una formula en FNC es satisfacible o
+	 * insaticfacible mediante el metodo de Resolucion
+	 * 
+	 * @param clausulas  en FNC de la formula
+	 * @param utilizados clausulas utilizadas en la formula
+	 * @return true si es insatisfacible y false si es satisfacible.
+	 */
 	public static boolean isInsatisfacible(ArrayList<ArrayList<String>> clausulas,
 			ArrayList<ArrayList<String>> utilizados) {
 
@@ -285,6 +285,13 @@ public class Process {
 		}
 	}
 
+	/**
+	 * Metodo que permite verificar si el conjunto de clausulas contiene una
+	 * clausula vacia
+	 * 
+	 * @param f conjunto de clausulas
+	 * @return true si contiene una clausula vacia false en caso contrario
+	 */
 	public static boolean isVacio(ArrayList<ArrayList<String>> f) {
 		for (int i = 0; i < f.size(); i++) {
 			for (int j = 0; j < f.get(i).size(); j++) {
@@ -296,6 +303,15 @@ public class Process {
 		return false;
 	}
 
+	/**
+	 * Metodo que permite realizar resolucion entre dos formulas
+	 * 
+	 * @param formulaX
+	 * @param formulaY
+	 * @return un array de Object el cual tiene 3 elementos, el primero es si pudo
+	 *         hacer resolucion y en caso de que llegue a dar true, genera las dos
+	 *         formulas en sus dos siguientes campos disponibles
+	 */
 	public static Object[] hacerResolucion(ArrayList<String> formulaX, ArrayList<String> formulaY) {
 		ArrayList<String> formula1 = (ArrayList<String>) formulaX.clone();
 		ArrayList<String> formula2 = (ArrayList<String>) formulaY.clone();
@@ -328,6 +344,13 @@ public class Process {
 		return arreglo;
 	}
 
+	/**
+	 * Metodo que permite concatenar dos arraylist
+	 * 
+	 * @param arraylist1
+	 * @param arraylist2
+	 * @return un arraylist sin elementos repetidos
+	 */
 	public static ArrayList<String> concat(ArrayList<String> arraylist1, ArrayList<String> arraylist2) {
 		ArrayList<String> newArrayList = new ArrayList<String>();
 		for (int i = 0; i < arraylist1.size(); i++) {
@@ -341,6 +364,13 @@ public class Process {
 		return newArrayList;
 	}
 
+	/**
+	 * Metodo que permite verificar si una formula tiene par complementario
+	 * 
+	 * @param clausula1
+	 * @param clausula2
+	 * @return un array de Object con la verificacion en 0 y en 1 la formula atomica
+	 */
 	public static Object[] esParComplementario(String clausula1, String clausula2) {
 		System.out.println("");
 		Object[] data = new Object[2];
